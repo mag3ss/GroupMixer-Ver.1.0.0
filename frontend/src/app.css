@@ -1,0 +1,159 @@
+@font-face {
+    font-family: myModernFont;
+    src: url("frontend/src/assets/fonts/ALLOVER MODERN DEMO.OTF");
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#topbar {
+    display: flex;
+    background-color: #440c99e0;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    text-align: center;
+    height: 7vh;
+    border-bottom: 5px solid #4d4d4d;
+    box-shadow: 100px 4px 20px 4px rgba(0,0,0,0.19);
+    max-height: 100%;
+}
+
+#programTitle {
+    font-size: 3rem;
+    display: flex;
+    flex: 1;
+}
+
+#container {
+    display: flex;
+    flex: 1;
+}
+
+#leftside {
+    background-image: linear-gradient(30deg, rgb(249, 124, 7), rgba(146, 11, 230, 0.943));
+    flex: 1;
+    background-color: #eee;
+}
+
+#rightside {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#rightside2 {
+    display: none;
+    flex: 4;
+    flex-direction: column;
+}
+
+#topRight {
+    background-color: #555555;
+    flex: 1;
+    padding: 20px;
+    display: flex;
+}
+
+#topRightLeft {
+    background-color: #555555;
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#topRightRight {
+    display: flex;
+    background-color: #555555;
+    flex: 1;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#bottomRight {
+    border-top: 5px solid #4d4d4d;
+    display: flex;
+    background-color: #555555;
+    flex: 1;
+    padding: 20px;
+}
+
+.list-collection {
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-y: auto;
+    max-height: 150px;
+    scrollbar-width: thin;
+    width: fit-content;
+    position: relative;
+    border: 1px solid;
+
+}
+
+.list-item {
+    margin-bottom: 10px;
+    
+}
+
+.list-item:hover {
+    background-color: #870d89;
+}
+
+#namnLista {
+    size: 3em;
+    margin-bottom: 10px;
+}
+
+#skapaNamnLista {
+    width: 100px;
+    height: 25px;
+}
+
+#rightContainer {
+    height: 120px;
+}
+
+#chooseGroup {
+    display: block;
+}
+
+#randomName {
+    display: block;
+    margin-top: 45px;
+    border-radius: 6px;
+}
+
+#randomName:hover {
+    box-shadow: 4px 4px 20px 4px rgba(0,0,0,0.19);
+}
+
+.left-divcontainer {
+    width: fit-content;
+    border: 2px solid black;
+    overflow-y: auto;
+    margin-left: 100px;
+}
+
+#groupMaker, #colorWheel {
+    background: transparent;
+    width: 100%;
+    border: 1px solid #d3d3d360;
+    height: 2.5rem;
+    transition: font-size 0.3s ease;
+}
+
+#groupMaker:hover, #colorWheel:hover {
+    font-size: 1em;
+    
+}
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GroupMix</title>
+  </head>
+  <body>
+    <div id="topbar">
+      <label id="programTitle">GroupMixer</label>
+    </div>
+    <div id="container">
+      <div id="leftside">
+        <button id="groupMaker">GroupMaker</button>
+        <button id="colorWheel">Wheel Randomizer</button>
+      </div>
+      <div id="rightside">
+        <div id="topRight">
+          <div id="topRightLeft">
+            <input type="text" id="namnLista" placeholder="Names" />
+            <button id="skapaNamnLista">Create List</button>
+          </div>
+          <div id="topRightRight">
+            <div class="list-collection">
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+              <div class="list-item">Edmond</div>
+            </div>
+          <div id="rightContainer">
+            <label for="groupSize" id="chooseGroup">Choose Group Size</label>
+            <select name="groupSize" id="grupper">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+            <button id="createGroup">Create Group</button>
+            <button id="randomName">Select Random Name</button>
+          </div>
+          </div>
+        </div>
+        <div id="bottomRight"></div>
+      </div>
+      <div id="rightside2">
+      </div>
+    </div>
+    </div>
+
+    <div id="app"></div>
+    <script src="./src/main.js" type="module"></script>
+  </body>
+</html>
