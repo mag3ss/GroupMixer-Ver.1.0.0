@@ -12,14 +12,14 @@ body {
 }
 
 #topbar {
+    min-height: 50px;
     display: flex;
-    background-color: #440c99e0;
+    background-color: #000000e0;
     color: rgb(255, 255, 255);
     padding: 10px;
     text-align: center;
     height: 7vh;
-    border-bottom: 5px solid #4d4d4d;
-    box-shadow: 100px 4px 20px 4px rgba(0,0,0,0.19);
+    border-bottom: 5px solid rgb(255, 255, 255);
     max-height: 100%;
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 #leftside {
-    background-image: linear-gradient(30deg, rgb(249, 124, 7), rgba(146, 11, 230, 0.943));
+    background-image: linear-gradient(30deg, rgb(24, 24, 24), rgba(0, 0, 0, 0.943));
     flex: 1;
     background-color: #eee;
 }
@@ -54,40 +54,41 @@ body {
 }
 
 #topRight {
-    background-color: #555555;
+    background-color: #171717;
     flex: 1;
     padding: 20px;
     display: flex;
 }
 
 #topRightLeft {
-    background-color: #555555;
+    background-color: #171717;
     flex: 1;
-    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-right: 2px solid white;
 }
 
 #topRightRight {
     display: flex;
-    background-color: #555555;
+    background-color: #171717;
     flex: 1;
-    padding: 10px;
     align-items: center;
     justify-content: center;
+    border-left: 2px solid white;
 }
 
 #bottomRight {
-    border-top: 5px solid #4d4d4d;
+    border-top: 5px solid #ffffff;
     display: flex;
-    background-color: #555555;
+    background-color: #171717;
     flex: 1;
     padding: 20px;
 }
 
 .list-collection {
+    color: #ffffff;
     margin-right: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -125,6 +126,7 @@ body {
 
 #chooseGroup {
     display: block;
+    color: white;
 }
 
 #randomName {
@@ -139,21 +141,27 @@ body {
 
 .left-divcontainer {
     width: fit-content;
-    border: 2px solid black;
+    border: 2px solid rgb(255, 255, 255);
     overflow-y: auto;
     margin-left: 100px;
+    padding: 10px;
+}
+
+.child {
+    color: #ffffff;
 }
 
 #groupMaker, #colorWheel {
+    color: white;
     background: transparent;
     width: 100%;
-    border: 1px solid #d3d3d360;
+    border: 1px solid #f6f6f6a7;
     height: 2.5rem;
     transition: font-size 0.3s ease;
 }
 
 #groupMaker:hover, #colorWheel:hover {
-    font-size: 1em;
-    
+    font-size: 0.9em;
+    text-decoration: underline;
 }
 

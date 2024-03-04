@@ -6,10 +6,10 @@ var resultArray = [];
 document.addEventListener('DOMContentLoaded', function () {
   const menuButton1 = document.getElementById("groupMaker");
   const menuButton2 = document.getElementById("colorWheel");
-  
+
   const menu1 = document.getElementById("rightside");
   const menu2 = document.getElementById("rightside2");
-  
+
   menuButton1.addEventListener('click', function () {
     if (menu1.style.display === "none" || menu1.style.display === "") {
       menu1.style.display = "flex";
@@ -17,7 +17,24 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log("Window 1 visible, Window 2 hidden");
     }
   });
-  
+
+  listCollection.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+    var clickedElement = event.target;
+
+    if (clickedElement.classList.contains('list-item')) {
+      // Right-clicked on a list item
+      var string = clickedElement.textContent;
+      resultArray = resultArray.filter(item => item !== string);
+      listCollection.removeChild(clickedElement);
+
+      // Check if listCollection is empty, and if so, remove it
+      if (listCollection.children.length === 0) {
+        listCollection.parentNode.removeChild(listCollection);
+      }}});
+
+
+  observer.observe(document, { childList: true, subtree: true });
   menuButton2.addEventListener('click', function () {
     if (menu2.style.display === "none" || menu2.style.display === "") {
       menu1.style.display = "none";
@@ -47,41 +64,18 @@ document.addEventListener('DOMContentLoaded', function () {
         resultArray = resultArray.filter(item => item !== string);
 
         // Check if listItem is a child of listCollection before removing
-        if (listItem.parentNode === listCollection) {
-          listCollection.removeChild(listItem);
-        }
+        // if (listItem.parentNode === listCollection) {
+        //   listCollection.removeChild(listItem);
+        // }
 
-        // Check if listCollection has only one child, then remove the container
-        if (listCollection.childNodes.length === 1) {
-          var parentContainer = listCollection.parentNode;
-          if (parentContainer && parentContainer.childNodes.length === 1) {
-            parentContainer.parentNode.removeChild(parentContainer);
-          }
-        }
+        // // Check if listCollection has only one child, then remove the container
+        // if (listCollection.childNodes.length === 1) {
+        //   this.removeChild(listCollection);
+        // } else {
+
+        // }
 
         console.log(resultArray);
-      });
-
-      // Double left-click to edit
-      var clicks = 0;
-      var timeout;
-      listItem.addEventListener('click', function () {
-        clicks++;
-        if (clicks === 1) {
-          timeout = setTimeout(function () {
-            clicks = 0;
-          }, 300);
-        } else if (clicks === 2) {
-          clearTimeout(timeout);
-          clicks = 0;
-
-          var newName = prompt('Enter a new name:', string);
-          if (newName !== null) {
-            resultArray[resultArray.indexOf(string)] = newName;
-            listItem.textContent = newName;
-            console.log(resultArray);
-          }
-        }
       });
     });
     console.log(resultArray);
@@ -124,18 +118,18 @@ document.addEventListener('DOMContentLoaded', function () {
         container.appendChild(div);
 
         // Right-click to delete
-        div.addEventListener('contextmenu', function (event) {
-          event.preventDefault();
-          resultArray = resultArray.filter(item => item !== str);
+        // div.addEventListener('contextmenu', function (event) {
+        //   event.preventDefault();
+        //   resultArray = resultArray.filter(item => item !== str);
 
-          // Check if div is a child of container before removing
-          var parentContainer = div.parentNode;
-          if (parentContainer === container) {
-            container.removeChild(div);
-            if (container.childNodes.length === 0) {
-              leftSide.removeChild(container);
-            }
-          }});
+        //   // Check if div is a child of container before removing
+        //   var parentContainer = div.parentNode;
+        //   if (parentContainer === container) {
+        //     container.removeChild(div);
+        //     if (container.childNodes.length === 0) {
+        //       leftSide.removeChild(container);
+        //     }
+        //   }});
         // Double left-click to edit
         var clicks = 0;
         var timeout;
@@ -197,3 +191,4 @@ document.addEventListener('DOMContentLoaded', function () {
     return array;
   }
 });
+
