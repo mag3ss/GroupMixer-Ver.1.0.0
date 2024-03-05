@@ -1,89 +1,69 @@
 import './style.css';
 import './app.css';
 
-var resultArray = [];
-// Declare resultArray as a global variable
 document.addEventListener('DOMContentLoaded', function () {
-  const menuButton1 = document.getElementById("groupMaker");
-  const menuButton2 = document.getElementById("colorWheel");
-
-  const menu1 = document.getElementById("rightside");
-  const menu2 = document.getElementById("rightside2");
-
-  menuButton1.addEventListener('click', function () {
-    if (menu1.style.display === "none" || menu1.style.display === "") {
-      menu1.style.display = "flex";
-      menu2.style.display = "none";
-      console.log("Window 1 visible, Window 2 hidden");
-    }
-  });
-
-  listCollection.addEventListener('contextmenu', function (event) {
-    event.preventDefault();
-    var clickedElement = event.target;
-
-    if (clickedElement.classList.contains('list-item')) {
-      // Right-clicked on a list item
-      var string = clickedElement.textContent;
-      resultArray = resultArray.filter(item => item !== string);
-      listCollection.removeChild(clickedElement);
-
-      // Check if listCollection is empty, and if so, remove it
-      if (listCollection.children.length === 0) {
-        listCollection.parentNode.removeChild(listCollection);
-      }}});
-
-
-  observer.observe(document, { childList: true, subtree: true });
-  menuButton2.addEventListener('click', function () {
-    if (menu2.style.display === "none" || menu2.style.display === "") {
-      menu1.style.display = "none";
-      menu2.style.display = "flex";
-      console.log("Window 2 visible, Window 1 hidden");
-    }
-  });
-
-  var button = document.getElementById('skapaNamnLista');
+  var resultArray = [];
   var listCollection = document.querySelector('.list-collection');
+  var leftSide = document.getElementById('bottomRight');
 
-
-  button.addEventListener('click', function () {
+  document.getElementById('skapaNamnLista').addEventListener('click', function () {
     var inputString = document.getElementById('namnLista').value;
     resultArray = splitString(inputString);
-    listCollection.innerHTML = '';
-
-    resultArray.forEach(function (string) {
-      var listItem = document.createElement('div');
-      listItem.className = 'list-item';
-      listItem.textContent = string;
-      listCollection.appendChild(listItem);
-
-      // Right-click to delete
-      listItem.addEventListener('contextmenu', function (event) {
-        event.preventDefault();
-        resultArray = resultArray.filter(item => item !== string);
-
-        // Check if listItem is a child of listCollection before removing
-        // if (listItem.parentNode === listCollection) {
-        //   listCollection.removeChild(listItem);
-        // }
-
-        // // Check if listCollection has only one child, then remove the container
-        // if (listCollection.childNodes.length === 1) {
-        //   this.removeChild(listCollection);
-        // } else {
-
-        // }
-
-        console.log(resultArray);
-      });
-    });
-    console.log(resultArray);
+    renderList();
   });
 
-  document.getElementById('createGroup').addEventListener('click', function() {
+  listCollection.addEventListener('click', function (event) {
+    var clickedElement = event.target;
+    var string = clickedElement.textContent;
+
+    if (event.button === 0) {
+      // Left-click (edit)
+      handleEditClick(string, clickedElement);
+    } else if (event.button === 2) {
+      // Right-click (delete)
+      handleDeleteClick(string, clickedElement);
+    }
+  });
+
+  leftSide.addEventListener('contextmenu', function (event) {
+    event.preventDefault();
+    var clickedElement = event.target;
+    var string = clickedElement.textContent;
+
+    if (event.button === 2 && clickedElement.className === 'child') {
+      // Right-click on child div within container
+      var container = clickedElement.parentNode;
+      handleDeleteClick(string, clickedElement);
+      // Check if container has no children, then remove it
+      if (container.childNodes.length === 1) {
+        leftSide.removeChild(container);
+      }
+    } else if (event.button === 2 && clickedElement.className === 'group-name') {
+      // Right-click on group name
+      var container = clickedElement.parentNode;
+      leftSide.removeChild(container);
+      // Check if container has no children, then remove it
+      if (container.childNodes.length === 1) {
+        leftSide.removeChild(container);
+      }
+    }
+  });
+
+  leftSide.addEventListener('dblclick', function (event) {
+    var clickedElement = event.target;
+    var string = clickedElement.textContent;
+
+    if (clickedElement.className === 'group-name') {
+      // Double left-click on group name
+      handleGroupEditClick(clickedElement);
+    } else if (clickedElement.className === 'child') {
+      // Double left-click on child name
+      handleEditClick(string, clickedElement);
+    }
+  });
+
+  document.getElementById('createGroup').addEventListener('click', function () {
     var grupperValue = document.getElementById('grupper').value;
-    var leftSide = document.getElementById('bottomRight');
     leftSide.innerHTML = '';
 
     // Make a copy of resultArray
@@ -103,7 +83,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     for (var i = 0; i < numContainers; i++) {
       var container = document.createElement('div');
-      container.className = 'left-divcontainer'; // Change to 'left-divContainer' class for styling
+      container.className = 'left-divcontainer';
+
+      // Create a div for the group name
+      var groupNameDiv = document.createElement('div');
+      groupNameDiv.className = 'group-name';
+      groupNameDiv.textContent = 'Group ' + (i + 1);
+      container.appendChild(groupNameDiv);
 
       // Calculate the number of div children in the current container
       var containerSize = (i === numContainers - 1) ? lastContainerSize : grupperValue;
@@ -111,51 +97,79 @@ document.addEventListener('DOMContentLoaded', function () {
       // Select div children from shuffled workingArray
       var containerStrings = workingArray.splice(0, containerSize);
 
-      containerStrings.forEach(function(str) {
+      containerStrings.forEach(function (str, index) {
         var div = document.createElement('div');
         div.className = 'child';
         div.textContent = str;
         container.appendChild(div);
-
-        // Right-click to delete
-        // div.addEventListener('contextmenu', function (event) {
-        //   event.preventDefault();
-        //   resultArray = resultArray.filter(item => item !== str);
-
-        //   // Check if div is a child of container before removing
-        //   var parentContainer = div.parentNode;
-        //   if (parentContainer === container) {
-        //     container.removeChild(div);
-        //     if (container.childNodes.length === 0) {
-        //       leftSide.removeChild(container);
-        //     }
-        //   }});
-        // Double left-click to edit
-        var clicks = 0;
-        var timeout;
-        div.addEventListener('click', function () {
-          clicks++;
-          if (clicks === 1) {
-            timeout = setTimeout(function () {
+      
+        // Only add the click event listener to the first child of each container (group name)
+        if (index === 0) {
+          var clicks = 0;
+          var timeout;
+          div.addEventListener('click', function () {
+            clicks++;
+            if (clicks === 2) {
+              clearTimeout(timeout);
               clicks = 0;
-            }, 300);
-          } else if (clicks === 2) {
-            clearTimeout(timeout);
-            clicks = 0;
-
-            var newName = prompt('Enter a new name:', str);
-            if (newName !== null) {
-              resultArray[resultArray.indexOf(str)] = newName;
-              div.textContent = newName;
-              console.log(resultArray);
+              handleEditClick(str, div);
+            } else {
+              timeout = setTimeout(function () {
+                clicks = 0;
+              }, 300);
             }
-          }
-        });
+          });
+        }
       });
 
       leftSide.appendChild(container);
     }
   });
+
+  function handleGroupEditClick(groupNameElement) {
+    var newName = prompt('Enter a new name:', groupNameElement.textContent);
+    if (newName !== null) {
+      groupNameElement.textContent = newName;
+    }
+  }
+
+  function handleEditClick(string, clickedElement) {
+    var newName = prompt('Enter a new name:', string);
+    if (newName !== null) {
+      if (clickedElement.className === 'child') {
+        // Update the text content of the child div
+        clickedElement.textContent = newName;
+      } else if (clickedElement.className === 'group-name') {
+        // Update the text content of the group name div
+        clickedElement.textContent = newName;
+      }
+      resultArray[resultArray.indexOf(string)] = newName;
+      renderList();
+      console.log(resultArray);
+    }
+  }
+
+  function handleDeleteClick(string, clickedElement) {
+    // Handle right-click to delete
+    resultArray = resultArray.filter(item => item !== string);
+
+    // Remove the specific child div within the container or list item
+    clickedElement.parentNode.removeChild(clickedElement);
+
+    // Re-render the list and containers to reflect the changes
+    renderList();
+    console.log(resultArray);
+  }
+
+  function renderList() {
+    listCollection.innerHTML = '';
+    resultArray.forEach(function (string) {
+      var listItem = document.createElement('div');
+      listItem.className = 'list-item';
+      listItem.textContent = string;
+      listCollection.appendChild(listItem);
+    });
+  }
 
   function splitString(inputString) {
     var resultArray = [];
@@ -191,4 +205,5 @@ document.addEventListener('DOMContentLoaded', function () {
     return array;
   }
 });
+
 
