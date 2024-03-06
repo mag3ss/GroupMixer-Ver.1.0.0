@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (event.button === 2 && clickedElement.className === 'group-name') {
       // Right-click on group name
       var container = clickedElement.parentNode;
-      leftSide.removeChild(container);
+      handleDeleteClick(string, clickedElement);
       // Check if container has no children, then remove it
       if (container.childNodes.length === 1) {
         leftSide.removeChild(container);
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('createGroup').addEventListener('click', function () {
     var grupperValue = document.getElementById('grupper').value;
-    leftSide.innerHTML = '';
+    // leftSide.innerHTML = '';
 
     // Make a copy of resultArray
     var workingArray = resultArray.slice();
@@ -97,33 +97,33 @@ document.addEventListener('DOMContentLoaded', function () {
       // Select div children from shuffled workingArray
       var containerStrings = workingArray.splice(0, containerSize);
 
-      containerStrings.forEach(function (str, index) {
+      containerStrings.forEach(function (str) {
         var div = document.createElement('div');
         div.className = 'child';
         div.textContent = str;
         container.appendChild(div);
-      
-        // Only add the click event listener to the first child of each container (group name)
-        if (index === 0) {
-          var clicks = 0;
-          var timeout;
-          div.addEventListener('click', function () {
-            clicks++;
-            if (clicks === 2) {
-              clearTimeout(timeout);
-              clicks = 0;
-              handleEditClick(str, div);
-            } else {
-              timeout = setTimeout(function () {
-                clicks = 0;
-              }, 300);
-            }
-          });
-        }
       });
 
       leftSide.appendChild(container);
     }
+  });
+
+  document.getElementById('copy').addEventListener('click', function () {
+    var clipboardText = '';
+
+    document.querySelectorAll('.left-divcontainer').forEach(function (groupContainer) {
+      var groupName = groupContainer.querySelector('.group-name').textContent;
+      clipboardText += groupName + '\n';
+
+      groupContainer.querySelectorAll('.child').forEach(function (child) {
+        clipboardText += child.textContent + '\n';
+      });
+
+      clipboardText += '\n'; // Empty line between groups
+    });
+
+    copyToClipboard(clipboardText);
+    console.log('Copied to clipboard:', clipboardText);
   });
 
   function handleGroupEditClick(groupNameElement) {
@@ -203,6 +203,15 @@ document.addEventListener('DOMContentLoaded', function () {
       array[j] = temp;
     }
     return array;
+  }
+
+  function copyToClipboard(text) {
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
   }
 });
 
