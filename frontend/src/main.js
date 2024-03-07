@@ -41,11 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (event.button === 2 && clickedElement.className === 'group-name') {
       // Right-click on group name
       var container = clickedElement.parentNode;
-      handleDeleteClick(string, clickedElement);
-      // Check if container has no children, then remove it
-      if (container.childNodes.length === 1) {
-        leftSide.removeChild(container);
-      }
+      handleGroupDeleteClick(container);
     }
   });
 
@@ -64,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('createGroup').addEventListener('click', function () {
     var grupperValue = document.getElementById('grupper').value;
-    // leftSide.innerHTML = '';
+    leftSide.innerHTML = '';
 
     // Make a copy of resultArray
     var workingArray = resultArray.slice();
@@ -108,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  document.getElementById('copy').addEventListener('click', function () {
+  document.getElementById('colorWheel').addEventListener('click', function () {
     var clipboardText = '';
 
     document.querySelectorAll('.left-divcontainer').forEach(function (groupContainer) {
@@ -157,6 +153,20 @@ document.addEventListener('DOMContentLoaded', function () {
     clickedElement.parentNode.removeChild(clickedElement);
 
     // Re-render the list and containers to reflect the changes
+    renderList();
+    console.log(resultArray);
+  }
+
+  function handleGroupDeleteClick(groupContainer) {
+    var groupName = groupContainer.querySelector('.group-name').textContent;
+
+    // Handle right-click on group name to delete the entire group
+    resultArray = resultArray.filter(item => !item.startsWith(groupName));
+
+    // Remove the entire container
+    groupContainer.parentNode.removeChild(groupContainer);
+
+    // Re-render the list to reflect the changes
     renderList();
     console.log(resultArray);
   }

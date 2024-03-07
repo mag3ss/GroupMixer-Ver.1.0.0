@@ -18,8 +18,8 @@ func main() {
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "GroupMixer",
-		Width:  1920,
-		Height: 1080,
+		Width:  650,
+		Height: 540,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
